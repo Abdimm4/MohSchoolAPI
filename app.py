@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request, render_template
 from database import get_connection
 import render_template
 
+
 app = Flask(__name__)
 
 
