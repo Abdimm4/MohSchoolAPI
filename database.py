@@ -13,5 +13,6 @@ def get_connection():
         port=parsed.port,
         user=parsed.username,
         password=parsed.password,
-        database=parsed.path.lstrip("/")
+        database=parsed.path.lstrip("/"),
+        use_pure=True
     )
