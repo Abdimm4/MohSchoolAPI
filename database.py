@@ -6,6 +6,6 @@ def get_connection():
         host=os.getenv("MYSQLHOST", "localhost"),
         port=int(os.getenv("MYSQLPORT", 3306)),
         user=os.getenv("MYSQLUSER", "root"),
-        password=os.getenv("MYSQLPASSWORD", ""),
+        password=os.getenv("MYSQLPASSWORD", "YourNewPassword123!"),
         database=os.getenv("MYSQLDATABASE", "MohSchoolAPI"),
     )
