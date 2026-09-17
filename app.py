@@ -34,7 +34,7 @@ def get_student(student_id):
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT * FROM Students WHERE Student_ID = %s",
+        "SELECT * FROM students WHERE Student_ID = %s",
         (student_id,)
     )
 
@@ -57,7 +57,7 @@ def add_student():
     cursor = db.cursor()
 
     sql = """
-        INSERT INTO Students
+        INSERT INTO students
         (Student_ID, First_Name, Last_Name, GPA, Enrolled_Date, Expected_Grad)
         VALUES (%s, %s, %s, %s, %s, %s)
     """
@@ -88,7 +88,7 @@ def update_student(student_id):
     cursor = db.cursor()
 
     sql = """
-        UPDATE Students
+        UPDATE students
         SET First_Name = %s,
             Last_Name = %s,
             GPA = %s,
@@ -121,7 +121,7 @@ def delete_student(student_id):
     cursor = db.cursor()
 
     cursor.execute(
-        "DELETE FROM Students WHERE Student_ID = %s",
+        "DELETE FROM students WHERE Student_ID = %s",
         (student_id,)
     )
 
@@ -142,7 +142,7 @@ def get_teachers():
     db = get_connection()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM Teacher")
+    cursor.execute("SELECT * FROM teacher")
     teachers = cursor.fetchall()
 
     cursor.close()
@@ -157,7 +157,7 @@ def get_teacher(teacher_id):
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT * FROM Teacher WHERE Teacher_ID = %s",
+        "SELECT * FROM teacher WHERE Teacher_ID = %s",
         (teacher_id,)
     )
 
@@ -181,7 +181,7 @@ def get_faculty():
     db = get_connection()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM Faculty")
+    cursor.execute("SELECT * FROM faculty")
     faculty = cursor.fetchall()
 
     cursor.close()
@@ -196,7 +196,7 @@ def get_faculty_member(faculty_id):
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT * FROM Faculty WHERE Faculty_ID = %s",
+        "SELECT * FROM faculty WHERE Faculty_ID = %s",
         (faculty_id,)
     )
 
@@ -220,7 +220,7 @@ def get_courses():
     db = get_connection()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM Courses")
+    cursor.execute("SELECT * FROM courses")
     courses = cursor.fetchall()
 
     cursor.close()
@@ -235,7 +235,7 @@ def get_course(course_id):
     cursor = db.cursor(dictionary=True)
 
     cursor.execute(
-        "SELECT * FROM Courses WHERE Course_ID = %s",
+        "SELECT * FROM courses WHERE Course_ID = %s",
         (course_id,)
     )
 
@@ -267,10 +267,10 @@ def get_classes():
             c.Course_Name,
             c.Course_Code,
             cl.Grade
-        FROM Classes cl
-        JOIN Students s
+        FROM classes cl
+        JOIN students s
             ON cl.Student_ID = s.Student_ID
-        JOIN Courses c
+        JOIN courses c
             ON cl.Course_ID = c.Course_ID
     """)
 
@@ -295,10 +295,10 @@ def get_class(class_id):
             c.Course_Name,
             c.Course_Code,
             cl.Grade
-        FROM Classes cl
-        JOIN Students s
+        FROM classes cl
+        JOIN students s
             ON cl.Student_ID = s.Student_ID
-        JOIN Courses c
+        JOIN courses c
             ON cl.Course_ID = c.Course_ID
         WHERE cl.Class_ID = %s
     """, (class_id,))
