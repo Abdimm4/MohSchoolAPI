@@ -1,10 +1,9 @@
-import os
-import mysql.connector
-from urllib.parse import urlparse
-
-
 def get_connection():
     url = os.getenv("MYSQL_URL")
+    if url is None:
+        raise RuntimeError("MYSQL_URL is not set")
+    if isinstance(url, bytes):
+        url = url.decode("utf-8")
 
     parsed = urlparse(url)
 
@@ -13,6 +12,5 @@ def get_connection():
         port=parsed.port,
         user=parsed.username,
         password=parsed.password,
-        database=parsed.path.lstrip("/"),
-        use_pure=True
+        database=(parsed.path or "").lstrip("/"),
     )
