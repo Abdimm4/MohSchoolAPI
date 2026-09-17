@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moh School Management — Records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1B2A4A;
+    --parchment: #F7F2E7;
+    --brass: #B8912F;
+    --slate: #3D4C5E;
+    --rule: #DCD4C0;
+    --white: #FFFFFF;
+    --danger: #A13D3D;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  .shell {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--ink);
+    color: var(--parchment);
+    padding: 32px 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.3;
+    padding: 0 28px 28px 28px;
+    border-bottom: 1px solid rgba(247, 242, 231, 0.15);
+    margin-bottom: 12px;
+  }
+
+  .brand span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12.5px;
+    color: rgba(247, 242, 231, 0.55);
+    margin-top: 4px;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .nav-item {
+    padding: 13px 28px;
+    font-size: 14.5px;
+    color: rgba(247, 242, 231, 0.75);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .nav-item:hover {
+    color: var(--parchment);
+    background: rgba(247, 242, 231, 0.04);
+  }
+
+  .nav-item.active {
+    color: var(--parchment);
+    border-left-color: var(--brass);
+    background: rgba(247, 242, 231, 0.06);
+    font-weight: 500;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 20px 28px 0 28px;
+    font-size: 12px;
+    color: rgba(247, 242, 231, 0.35);
+  }
+
+  main {
+    flex: 1;
+    padding: 44px 56px;
+    max-width: 1100px;
+  }
+
+  header.page-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: 27px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  .table-wrap {
+    background: var(--white);
+    border: 1px solid var(--rule);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  thead th {
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--ink);
+    padding: 13px 18px;
+    border-bottom: 2px solid var(--brass);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--slate);
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover {
+    background: rgba(184, 145, 47, 0.045);
+  }
+
+  .state-msg {
+    padding: 48px 18px;
+    text-align: center;
+    color: var(--slate);
+    font-size: 14px;
+  }
+
+  .state-msg.error {
+    color: var(--danger);
+  }
+
+  .count-pill {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--slate);
+    font-weight: 400;
+  }
+
+  @media (max-width: 720px) {
+    .shell { flex-direction: column; }
+    .sidebar { width: 100%; padding: 18px 0; }
+    nav { flex-direction: row; overflow-x: auto; }
+    .nav-item { border-left: none; border-bottom: 3px solid transparent; white-space: nowrap; }
+    .nav-item.active { border-left-color: transparent; border-bottom-color: var(--brass); }
+    .brand { border-bottom: none; padding-bottom: 14px; }
+    .sidebar-footer { display: none; }
+    main { padding: 28px 20px; }
+    .table-wrap { overflow-x: auto; }
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      Moh School Management
+      <span>Student records ledger</span>
+    </div>
+    <nav id="nav">
+      <div class="nav-item" data-endpoint="students">Students</div>
+      <div class="nav-item" data-endpoint="teachers">Teachers</div>
+      <div class="nav-item" data-endpoint="faculty">Faculty</div>
+      <div class="nav-item" data-endpoint="courses">Courses</div>
+      <div class="nav-item" data-endpoint="classes">Classes</div>
+    </nav>
+    <div class="sidebar-footer">MIS 376 — Augsburg University</div>
+  </aside>
+
+  <main>
+    <header class="page-header">
+      <h1 id="page-title">Students<span class="count-pill" id="count-pill"></span></h1>
+      <p class="subtitle" id="page-subtitle">Live records from the Railway-hosted database.</p>
+    </header>
+
+    <div class="table-wrap">
+      <div id="content">
+        <div class="state-msg">Loading…</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const labels = {
+    students: "Students",
+    teachers: "Teachers",
+    faculty: "Faculty",
+    courses: "Courses",
+    classes: "Classes"
+  };
+
+  const navItems = document.querySelectorAll(".nav-item");
+  const content = document.getElementById("content");
+  const pageTitle = document.getElementById("page-title");
+  const countPill = document.getElementById("count-pill");
+
+  function renderTable(rows) {
+    if (!Array.isArray(rows) || rows.length === 0) {
+      content.innerHTML = '<div class="state-msg">No records found.</div>';
+      countPill.textContent = "";
+      return;
+    }
+
+    const columns = Object.keys(rows[0]);
+
+    let html = "<table><thead><tr>";
+    columns.forEach(col => {
+      html += `<th>${col.replace(/_/g, " ")}</th>`;
+    });
+    html += "</tr></thead><tbody>";
+
+    rows.forEach(row => {
+      html += "<tr>";
+      columns.forEach(col => {
+        const val = row[col];
+        html += `<td>${val === null || val === undefined ? "—" : val}</td>`;
+      });
+      html += "</tr>";
+    });
+
+    html += "</tbody></table>";
+    content.innerHTML = html;
+    countPill.textContent = `${rows.length} record${rows.length === 1 ? "" : "s"}`;
+  }
+
+  async function loadEndpoint(endpoint) {
+    content.innerHTML = '<div class="state-msg">Loading…</div>';
+    pageTitle.firstChild.textContent = labels[endpoint];
+    countPill.textContent = "";
+
+    try {
+      const res = await fetch(`/${endpoint}`);
+      if (!res.ok) throw new Error(`Server responded with ${res.status}`);
+      const data = await res.json();
+      renderTable(data);
+    } catch (err) {
+      content.innerHTML = `<div class="state-msg error">Couldn't load ${labels[endpoint].toLowerCase()}. ${err.message}</div>`;
+    }
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener("click", () => {
+      navItems.forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+      loadEndpoint(item.dataset.endpoint);
+    });
+  });
+
+  // Default view on load
+  navItems[0].classList.add("active");
+  loadEndpoint("students");
+</script>
+
+</body>
+</html>
