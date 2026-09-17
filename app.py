@@ -19,7 +19,7 @@ def get_students():
     db = get_connection()
     cursor = db.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM Students")
+    cursor.execute("SELECT * FROM students")
     students = cursor.fetchall()
 
     cursor.close()
