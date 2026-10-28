@@ -5,3 +5,5 @@ __pycache__/
 venv/
 *.log
  
+# Holds the MySQL root password
+mysql-init.txt
